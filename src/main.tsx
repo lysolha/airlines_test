@@ -2,8 +2,10 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 // import { store } from "./app/store"
 // import App from "./App"
+import { ThemeProvider } from "@mui/material/styles";
 import "./index.css";
 import FlightsPage from "./pages/FlightsPage";
+import { theme } from "./theme";
 
 const container = document.getElementById("root");
 
@@ -13,7 +15,10 @@ if (container) {
   root.render(
     <React.StrictMode>
       {/* <Provider store={store}> */}
-      <FlightsPage />
+      <ThemeProvider theme={theme}>
+        <FlightsPage />
+      </ThemeProvider>
+
       {/* </Provider> */}
     </React.StrictMode>,
   );
