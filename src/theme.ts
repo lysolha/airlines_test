@@ -23,8 +23,33 @@ export const theme = createTheme({
         fontSize: "3rem",
       },
     },
+    h2: {
+      color: "rgba(0, 0, 0, 0.8)",
+      fontFamily: "Piedra",
+      fontSize: "2rem",
+      ["@media (max-width:600px)"]: {
+        fontSize: "1rem",
+      },
+    },
+    h3: {
+      color: "rgba(0, 0, 0, 0.8)",
+      fontFamily: "Piedra",
+      fontSize: "1.5rem",
+      ["@media (max-width:600px)"]: {
+        fontSize: "0.8rem",
+      },
+    },
+    h4: {
+      color: "rgba(0, 0, 0, 0.8)",
+      fontFamily: "JosefinSans",
+      fontSize: "1.5rem",
+      ["@media (max-width:600px)"]: {
+        fontSize: "0.8rem",
+      },
+    },
     body1: {
       fontFamily: "'JosefinSans', sans-serif",
+      fontSize: "1rem",
     },
     button: {
       fontFamily: "Piedra",
@@ -50,18 +75,42 @@ export const theme = createTheme({
           textTransform: "none",
           background: theme.palette.primary.light,
           padding: "1rem 2rem",
-          border: `0.5rem dashed ${theme.palette.primary.main}`,
+          border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
-          "&:hover": {
-            border: `0.4rem dashed ${theme.palette.primary.main}`,
-          },
 
           ["@media (max-width:600px)"]: {
             padding: "1rem",
             borderRadius: "1rem",
-            border: `0.4rem dashed ${theme.palette.primary.main}`,
+            border: `0.2rem dashed ${theme.palette.primary.main}`,
           },
         }),
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          alignSelf: "end",
+          width: "fit-content",
+          background: theme.palette.primary.light,
+          border: `0.2rem dashed ${theme.palette.primary.main}`,
+          borderRadius: "1rem",
+
+          ["@media (max-width:600px)"]: {
+            padding: "1rem",
+            borderRadius: "1rem",
+            border: `0.2rem dashed ${theme.palette.primary.main}`,
+          },
+        }),
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: "0",
+          ":last-child": {
+            padding: 0,
+          },
+        },
       },
     },
     MuiOutlinedInput: {
