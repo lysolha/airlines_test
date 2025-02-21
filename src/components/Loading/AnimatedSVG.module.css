@@ -1,0 +1,58 @@
+.animationHolder {
+  position: relative;
+  height: 100px;
+  width: 150px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.icon {
+  rotate: 90deg;
+}
+
+.animatedSvg {
+  margin: 0 auto;
+  width: fit-content;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  animation: moveUpDown 1.2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+    rotate: 0deg;
+  }
+}
+
+.cloud {
+  position: absolute;
+  top: 0;
+  left: -40px;
+  animation: moveCloud 6s linear infinite;
+}
+
+@keyframes moveCloud {
+  0% {
+    left: -200px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: 0px;
+    opacity: 0;
+  }
+}
