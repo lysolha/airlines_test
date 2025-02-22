@@ -1,5 +1,7 @@
+import { Stack } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { FC, useEffect, useState } from "react";
+import FlightSelect from "../components/FlightSelect/FlightSelect";
 import type { FlightDate } from "../Entities/FlightDate";
 import FlightsByDateList from "./FlightsByDateList/FlightsByDateList";
 
@@ -39,15 +41,25 @@ const ListTab: FC<ListTabProps> = ({ flights, totalFlightsCount }) => {
 
   return (
     <div className="flex w-full flex-col gap-5">
-      <TablePagination
-        component="div"
-        count={totalFlightsCount}
-        page={page}
-        onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        rowsPerPageOptions={[3, 7, "all"]}
-      />
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <FlightSelect />
+        <TablePagination
+          component="div"
+          count={totalFlightsCount}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPageOptions={[3, 7]}
+        />
+      </Stack>
       {paginatedFlights.map((flightDate) => {
         return (
           <FlightsByDateList

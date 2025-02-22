@@ -3,17 +3,18 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "rgba(0, 0, 0, 0.8)",
+      main: "#4A2626",
       light: "#E9CB96",
     },
     secondary: {
       main: "#03dac6",
+      light: "#F4ECD0",
     },
   },
   typography: {
     fontFamily: "'JosefinSans', sans-serif",
     h1: {
-      color: "rgba(0, 0, 0, 0.8)",
+      color: "#4A2626",
       fontFamily: "Piedra",
       fontSize: "4rem",
       ["@media (max-width:600px)"]: {
@@ -24,7 +25,7 @@ export const theme = createTheme({
       },
     },
     h2: {
-      color: "rgba(0, 0, 0, 0.8)",
+      color: "#4A2626",
       fontFamily: "Piedra",
       fontSize: "2rem",
       ["@media (max-width:600px)"]: {
@@ -32,7 +33,7 @@ export const theme = createTheme({
       },
     },
     h3: {
-      color: "rgba(0, 0, 0, 0.8)",
+      color: "#4A2626",
       fontFamily: "Piedra",
       fontSize: "1.5rem",
       ["@media (max-width:600px)"]: {
@@ -40,7 +41,7 @@ export const theme = createTheme({
       },
     },
     h4: {
-      color: "rgba(0, 0, 0, 0.8)",
+      color: "#4A2626",
       fontFamily: "JosefinSans",
       fontSize: "1.5rem",
       ["@media (max-width:600px)"]: {
@@ -51,21 +52,34 @@ export const theme = createTheme({
       fontFamily: "'JosefinSans', sans-serif",
       fontSize: "1rem",
     },
-    button: {
-      fontFamily: "Piedra",
-    },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({
+          fontFamily: "Piedra",
+          color: theme.palette.primary.main,
+          fontSize: "1rem",
           textTransform: "none",
-          borderRadius: "8px",
-          background: "#ffffff",
-          border: `4px dashed ${theme.palette.primary.main}`,
+          borderRadius: "1rem",
+          backgroundColor: theme.palette.secondary.light,
+          width: "fit-content",
+          border: `0.2rem dashed ${theme.palette.primary.main}`,
           "&:hover": {
-            border: `4px dashed ${theme.palette.secondary.main}`,
+            color: theme.palette.secondary.light,
+            backgroundColor: theme.palette.primary.main,
+            border: `0.2rem dashed ${theme.palette.secondary.light}`,
           },
+
+          variants: [
+            {
+              props: { variant: "full" },
+              style: {
+                width: "100%",
+                height: "100%",
+              },
+            },
+          ],
         }),
       },
     },
@@ -116,8 +130,12 @@ export const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: ({ theme }) => ({
-          background: theme.palette.primary.light,
+          backgroundColor: theme.palette.secondary.light,
           borderRadius: "1rem",
+          cursor: "pointer",
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: `0.2rem dashed ${theme.palette.primary.main}`,
+          },
         }),
         notchedOutline: ({ theme }) => ({
           textTransform: "none",

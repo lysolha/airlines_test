@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { useFetchFlights } from "../API/useFetchFlights";
 import ListTab from "../components/ListTab";
 import Loading from "../components/Loading/AnimatedSVG";
+import SearchForm from "../components/SearchForm/SearchForm";
 import type { Flight } from "../Entities/Flight";
 import type { FlightDate } from "../Entities/FlightDate";
 
@@ -46,7 +47,7 @@ const FlightsPage: FC = () => {
         <Typography variant="h1">Happy Airline Tickets</Typography>
       </Paper>
 
-      {/* <TextField className="w-full" placeholder="search"></TextField> */}
+      <SearchForm />
 
       {loading ? (
         <Loading></Loading>

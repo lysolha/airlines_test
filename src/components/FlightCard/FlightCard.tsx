@@ -32,8 +32,8 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
       onClick={(e) => openFlight(e)}
     >
       <div className="absolute top-5 right-5 flex w-full justify-end gap-2">
-        <FavoriteBorderIcon></FavoriteBorderIcon>
-        <SendIcon></SendIcon>
+        <FavoriteBorderIcon />
+        <SendIcon />
       </div>
 
       <CardContent>
@@ -64,7 +64,7 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
             <Typography variant="h4">Terminal: {flight.terminal}</Typography>
             <Typography variant="h4">Gate:{flight.gate}</Typography>
           </div>
-          <Typography variant="body1">Price: {flight.price}</Typography>
+          <Typography variant="body1">Price: {flight.price}$</Typography>
         </div>
       </CardContent>
     </Card>
