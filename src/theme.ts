@@ -5,6 +5,7 @@ export const theme = createTheme({
     primary: {
       main: "#4A2626",
       light: "#E9CB96",
+      dark: "#A9957E",
     },
     secondary: {
       main: "#03dac6",
@@ -58,17 +59,23 @@ export const theme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           fontFamily: "Piedra",
-          color: theme.palette.primary.main,
           fontSize: "1rem",
           textTransform: "none",
           borderRadius: "1rem",
-          backgroundColor: theme.palette.secondary.light,
           width: "fit-content",
-          border: `0.2rem dashed ${theme.palette.primary.main}`,
+          color: theme.palette.secondary.light,
+          backgroundColor: theme.palette.primary.main,
+          border: `0.2rem dashed ${theme.palette.secondary.light}`,
+          transition: "transform 0.2s ease-in-out",
+
           "&:hover": {
-            color: theme.palette.secondary.light,
-            backgroundColor: theme.palette.primary.main,
-            border: `0.2rem dashed ${theme.palette.secondary.light}`,
+            transform: "scale3d(1.03, 1, 1)",
+          },
+
+          "&.Mui-disabled": {
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.grey[700],
+            border: `0.2rem dashed ${theme.palette.grey[700]}`,
           },
 
           variants: [
@@ -100,9 +107,28 @@ export const theme = createTheme({
         }),
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: "1rem",
+          textTransform: "none",
+          background: theme.palette.primary.light,
+          padding: "1rem",
+          border: `0.2rem dashed ${theme.palette.primary.main}`,
+          borderRadius: "1rem",
+
+          ["@media (max-width:600px)"]: {
+            padding: "1rem",
+            borderRadius: "1rem",
+            border: `0.2rem dashed ${theme.palette.primary.main}`,
+          },
+        }),
+      },
+    },
     MuiTablePagination: {
       styleOverrides: {
         root: ({ theme }) => ({
+          fontSize: "1rem",
           alignSelf: "end",
           width: "fit-content",
           background: theme.palette.primary.light,

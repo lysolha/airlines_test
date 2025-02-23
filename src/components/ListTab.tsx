@@ -1,15 +1,24 @@
-import { Stack } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
+import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
-import FlightSelect from "../components/FlightSelect/FlightSelect";
+import type { Filters } from "../Entities/Filters";
 import type { FlightDate } from "../Entities/FlightDate";
+import DeletableChips from "./DeletableChips/DeletableChips";
 import FlightsByDateList from "./FlightsByDateList/FlightsByDateList";
 
 interface ListTabProps {
   flights: FlightDate[];
   totalFlightsCount: number;
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
 }
-const ListTab: FC<ListTabProps> = ({ flights, totalFlightsCount }) => {
+const ListTab: FC<ListTabProps> = ({
+  flights,
+  totalFlightsCount,
+  filters,
+  setFilters,
+}) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
 
@@ -49,10 +58,13 @@ const ListTab: FC<ListTabProps> = ({ flights, totalFlightsCount }) => {
           alignItems: "center",
         }}
       >
-        <FlightSelect />
+        <DeletableChips
+          setFilters={setFilters}
+          appliedFilters={filters}
+        ></DeletableChips>
         <TablePagination
           component="div"
-          count={totalFlightsCount}
+          count={flights.length}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
@@ -60,16 +72,23 @@ const ListTab: FC<ListTabProps> = ({ flights, totalFlightsCount }) => {
           rowsPerPageOptions={[3, 7]}
         />
       </Stack>
-      {paginatedFlights.map((flightDate) => {
-        return (
-          <FlightsByDateList
-            key={flightDate.id}
-            flightsList={flightDate.flights}
-            date={flightDate.date}
-          ></FlightsByDateList>
-        );
-      })}
-      ;
+      {paginatedFlights.length > 0 ? (
+        paginatedFlights.map((flightDate) => {
+          return (
+            <FlightsByDateList
+              key={flightDate.id}
+              flightsList={flightDate.flights}
+              date={dayjs(flightDate.date).format("DD/MM/YYYY")}
+            ></FlightsByDateList>
+          );
+        })
+      ) : (
+        <Paper>
+          <Typography variant="h3" sx={{ textAlign: "center" }}>
+            Flights not found
+          </Typography>
+        </Paper>
+      )}
     </div>
   );
 };

@@ -1,45 +1,24 @@
 import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useFetchFlights } from "../API/useFetchFlights";
 import ListTab from "../components/ListTab";
 import Loading from "../components/Loading/AnimatedSVG";
 import SearchForm from "../components/SearchForm/SearchForm";
-import type { Flight } from "../Entities/Flight";
-import type { FlightDate } from "../Entities/FlightDate";
+import type { Filters } from "../Entities/Filters";
+import { useSortedAndFilteredFlights } from "../hooks/useSortedAndFilteredFlights";
 
 const FlightsPage: FC = () => {
   const { flights, error, loading } = useFetchFlights();
+  const [filters, setFilters] = useState<Filters>({
+    sortType: "",
+    searchFrom: "",
+    searchTo: "",
+    isSearch: false,
+    searchDate: "",
+  });
 
-  const [filteredByDate, setFilteredFlights] = useState<FlightDate[]>([]);
-
-  const groupFlightsByDate = (flights: Flight[]): FlightDate[] => {
-    const groupedFlights: Record<string, Flight[]> = {};
-
-    flights.forEach((flight) => {
-      const date = flight.departureTime.split("T")[0];
-
-      if (!groupedFlights[date]) {
-        groupedFlights[date] = [];
-      }
-
-      groupedFlights[date].push(flight);
-    });
-
-    const result = Object.keys(groupedFlights)
-      .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
-      .map((date) => ({
-        id: new Date(date).getTime(),
-        date,
-        flights: groupedFlights[date],
-      }));
-
-    return result;
-  };
-
-  useEffect(() => {
-    setFilteredFlights(groupFlightsByDate(flights));
-  }, [flights]);
+  const sortedFlights = useSortedAndFilteredFlights(flights, filters);
 
   return (
     <div className="mx-10 flex max-w-7xl flex-col items-center gap-5 xl:m-auto">
@@ -47,12 +26,17 @@ const FlightsPage: FC = () => {
         <Typography variant="h1">Happy Airline Tickets</Typography>
       </Paper>
 
-      <SearchForm />
+      <SearchForm setFilters={setFilters} />
 
       {loading ? (
         <Loading></Loading>
       ) : (
-        <ListTab flights={filteredByDate} totalFlightsCount={flights.length} />
+        <ListTab
+          flights={sortedFlights}
+          totalFlightsCount={sortedFlights.length}
+          filters={filters}
+          setFilters={setFilters}
+        />
       )}
     </div>
   );

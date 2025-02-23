@@ -1,7 +1,7 @@
 import type { Flight } from "./Flight";
 
 export type FlightDate = {
-  id: "";
-  date: "";
+  id: number;
+  date: string;
   flights: Flight[];
 };

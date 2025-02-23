@@ -13,6 +13,15 @@ interface FlightCardProps {
 const FlightCard: FC<FlightCardProps> = ({ flight }) => {
   const date = new Date(flight.departureTime).toLocaleString();
 
+  const currentFlightDuration =
+    new Date(flight.arrivalTime).getTime() -
+    new Date(flight.departureTime).getTime();
+
+  const hours = Math.floor(currentFlightDuration / (1000 * 60 * 60));
+  const minutes = Math.floor(
+    (currentFlightDuration % (1000 * 60 * 60)) / (1000 * 60),
+  );
+
   const openFlight = (e) => {
     console.log("test");
   };
@@ -52,6 +61,9 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
             </Typography>
           </div>
           <div className="flex flex-col">
+            <Typography variant="h2">
+              {hours}:{minutes}
+            </Typography>
             <Typography variant="h3">{flight.to}</Typography>
             <Typography variant="h4" sx={{ color: "text.secondary" }}>
               {new Date(flight.arrivalTime).toLocaleString()}
