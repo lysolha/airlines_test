@@ -2,6 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { Flight } from "../../Entities/Flight";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -11,7 +12,7 @@ interface FlightCardProps {
   flight: Flight;
 }
 const FlightCard: FC<FlightCardProps> = ({ flight }) => {
-  const date = new Date(flight.departureTime).toLocaleString();
+  const navigate = useNavigate();
 
   const currentFlightDuration =
     new Date(flight.arrivalTime).getTime() -
@@ -23,7 +24,8 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
   );
 
   const openFlight = (e) => {
-    console.log("test");
+    e.preventDefault();
+    navigate(`/flights/${flight.id}`);
   };
 
   return (

@@ -18,6 +18,7 @@ export const theme = createTheme({
       color: "#4A2626",
       fontFamily: "Piedra",
       fontSize: "4rem",
+      width: "fit-content",
       ["@media (max-width:600px)"]: {
         fontSize: "2rem",
       },
