@@ -7,11 +7,12 @@ import { Flight } from "../../Entities/Flight";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SendIcon from "@mui/icons-material/Send";
+import { Stack } from "@mui/material";
 
-interface FlightCardProps {
+interface DetailsFlightCardProps {
   flight: Flight;
 }
-const FlightCard: FC<FlightCardProps> = ({ flight }) => {
+const DetailsFlightCard: FC<DetailsFlightCardProps> = ({ flight }) => {
   const navigate = useNavigate();
 
   const currentFlightDuration =
@@ -23,31 +24,21 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
     (currentFlightDuration % (1000 * 60 * 60)) / (1000 * 60),
   );
 
-  const openFlight = (e) => {
-    e.preventDefault();
-    navigate(`/flights/${flight.id}`);
-  };
-
   return (
     <Card
+      variant="bortPass"
       elevation={6}
       sx={{
         position: "relative",
-        backgroundColor: "#F4ECD0",
-        cursor: "pointer",
-        transition: "transform 0.2s ease-in-out",
-        "&:hover": {
-          transform: "scale3d(1.01, 1, 1)",
-        },
       }}
-      onClick={(e) => openFlight(e)}
     >
-      <div className="absolute top-5 right-5 flex w-full justify-end gap-2">
-        <FavoriteBorderIcon />
-        <SendIcon />
+      <div className="absolute top-3 right-4 flex w-full justify-end gap-2">
+        <FavoriteBorderIcon sx={{ fill: "#F4ECD0" }} />
+        <SendIcon sx={{ fill: "#F4ECD0" }} />
       </div>
 
       <CardContent>
+        <Stack></Stack>
         <Typography variant="h3" sx={{ marginBottom: "1rem" }}>
           {flight.airline}
         </Typography>
@@ -89,4 +80,4 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
   );
 };
 
-export default FlightCard;
+export default DetailsFlightCard;

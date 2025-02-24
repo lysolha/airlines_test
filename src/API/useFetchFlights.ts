@@ -29,7 +29,7 @@ export const useFetchFlights = () => {
 
     const loadingTimer = setTimeout(() => {
       fetchFlights();
-    }, 2000);
+    }, 0);
 
     return () => {
       clearTimeout(loadingTimer);
@@ -37,4 +37,51 @@ export const useFetchFlights = () => {
   }, []);
 
   return { flights, error, loading };
+};
+
+const initialFlight: Flight = {
+  id: "",
+  airline: "",
+  from: "",
+  to: "",
+  departureTime: "",
+  arrivalTime: "",
+  price: 0,
+  terminal: "",
+  gate: "",
+  tickets: {
+    total: 0,
+    remaining: 0,
+  },
+};
+
+export const useFetchSingleFlight = (id: string | undefined) => {
+  const [flight, setFlight] = useState<Flight>(initialFlight);
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchFlights = () => {
+    setLoading(true);
+
+    axios
+      .get(`${FLIGHTS_API_LINK}/${id}`)
+      .then((response) => {
+        setFlight(response.data);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+      fetchFlights();
+    }
+  }, []);
+
+  return { flight, error, loading };
 };

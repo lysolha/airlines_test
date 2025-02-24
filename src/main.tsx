@@ -34,14 +34,15 @@ if (container) {
             <Typography variant="h1">Happy Airline Tickets</Typography>
           </Paper>
         </Stack>
-
-        <Router>
-          <Routes>
-            <Route index element={<FlightsPage />} />
-            <Route path="flights/:id" element={<FlightDetailsPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Router>
+        <div className="mx-10 max-w-7xl xl:m-auto">
+          <Router>
+            <Routes>
+              <Route index element={<FlightsPage />} />
+              <Route path="flights/:id" element={<FlightDetailsPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Router>
+        </div>
       </ThemeProvider>
 
       {/* </Provider> */}

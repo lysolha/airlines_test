@@ -19,7 +19,7 @@ const FlightsPage: FC = () => {
   const sortedFlights = useSortedAndFilteredFlights(flights, filters);
 
   return (
-    <div className="mx-10 flex max-w-7xl flex-col items-center gap-5 xl:m-auto">
+    <div className="flex flex-col items-center gap-5">
       <SearchForm setFilters={setFilters} />
 
       {loading ? (

@@ -95,7 +95,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           textTransform: "none",
-          background: theme.palette.primary.light,
+          backgroundColor: theme.palette.primary.light,
           padding: "1rem 2rem",
           border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
@@ -113,7 +113,7 @@ export const theme = createTheme({
         root: ({ theme }) => ({
           fontSize: "1rem",
           textTransform: "none",
-          background: theme.palette.primary.light,
+          backgroundColor: theme.palette.primary.light,
           padding: "1rem",
           border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
@@ -132,7 +132,7 @@ export const theme = createTheme({
           fontSize: "1rem",
           alignSelf: "end",
           width: "fit-content",
-          background: theme.palette.primary.light,
+          backgroundColor: theme.palette.primary.light,
           border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
 
@@ -144,14 +144,34 @@ export const theme = createTheme({
         }),
       },
     },
-    MuiCardContent: {
+    MuiCard: {
       styleOverrides: {
-        root: {
-          padding: "0",
-          ":last-child": {
-            padding: 0,
+        root: ({ theme }) => ({
+          "& .MuiCardContent-root": {
+            ":last-child": {
+              padding: 0,
+            },
           },
-        },
+          variants: [
+            {
+              props: { variant: "bortPass" },
+              style: {
+                padding: "3rem 0rem",
+                backgroundColor: theme.palette.primary.main,
+                border: `0.2rem dashed ${theme.palette.secondary.light}`,
+
+                "& .MuiCardContent-root": {
+                  padding: "1rem 2rem",
+                  backgroundColor: theme.palette.secondary.light,
+
+                  ":last-child": {
+                    padding: "1rem 2rem",
+                  },
+                },
+              },
+            },
+          ],
+        }),
       },
     },
     MuiOutlinedInput: {
