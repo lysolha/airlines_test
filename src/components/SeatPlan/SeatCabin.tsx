@@ -10,7 +10,7 @@ const SeatCabin: FC<SeatCabinProps> = ({ flightId, cabinArr }) => {
   return (
     <Stack
       sx={{
-        gap: "0.5rem",
+        gap: "0.4rem",
 
         [theme.breakpoints.down("lg")]: {
           flexDirection: "row",

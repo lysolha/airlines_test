@@ -82,6 +82,7 @@ const SeatPlan: FC<SeatPlanParams> = ({ flightId, tickets }) => {
           flexDirection: "row",
           gap: "1rem",
           width: "fit-content",
+          flexWrap: "wrap",
 
           [theme.breakpoints.down("lg")]: {
             flexDirection: "column",
