@@ -35,7 +35,6 @@ const Cart = () => {
     setAddedTickets(Array.from(groupedMap.values()));
   }, [flights, cartState]);
 
-  console.log("addedTickets", addedTickets);
   return (
     <>
       {loading ? (

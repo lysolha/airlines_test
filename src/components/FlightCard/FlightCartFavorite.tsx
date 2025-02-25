@@ -1,3 +1,4 @@
+import { Stack } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -20,13 +21,6 @@ const FlightCartFavorite: FC<FlightCardProps> = ({ flight }) => {
       elevation={6}
       sx={{
         position: "relative",
-        backgroundColor: "#F4ECD0",
-        cursor: "pointer",
-        transition: "transform 0.2s ease-in-out",
-        width: "100%",
-        "&:hover": {
-          transform: "scale3d(1.01, 1, 1)",
-        },
       }}
       onClick={(e) => openFlight(e)}
     >
@@ -38,20 +32,29 @@ const FlightCartFavorite: FC<FlightCardProps> = ({ flight }) => {
           {flight.id}
         </Typography>
 
-        <div className="mb-2 flex justify-around">
-          <div className="flex flex-col">
+        <Stack
+          sx={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <Stack
+            sx={{ flexDirection: "column", alignItems: "start", gap: "1rem" }}
+          >
             <Typography variant="h3">{flight.from}</Typography>
             <Typography variant="h4" sx={{ color: "text.secondary" }}>
               {new Date(flight.departureTime).toLocaleString()}
             </Typography>
-          </div>
-          <div className="flex flex-col">
+          </Stack>
+          <Stack
+            sx={{ flexDirection: "column", alignItems: "start", gap: "1rem" }}
+          >
             <Typography variant="h3">{flight.to}</Typography>
             <Typography variant="h4" sx={{ color: "text.secondary" }}>
               {new Date(flight.arrivalTime).toLocaleString()}
             </Typography>
-          </div>
-        </div>
+          </Stack>
+        </Stack>
       </CardContent>
     </Card>
   );

@@ -24,12 +24,15 @@ html {
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  margin-bottom: 3rem;
+}
+
+.root {
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: none;
 }
 
 h1,

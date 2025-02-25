@@ -1,7 +1,7 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SendIcon from "@mui/icons-material/Send";
-import { IconButton } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -13,11 +13,13 @@ import {
   removeFromFavorites,
 } from "../../app/reducers/FavoritesSlice";
 import type { Flight } from "../../Entities/Flight";
+import { theme } from "../../theme";
 
 interface FlightCardProps {
   flight: Flight;
+  variant?: string;
 }
-const FlightCard: FC<FlightCardProps> = ({ flight }) => {
+const FlightCard: FC<FlightCardProps> = ({ flight, variant = "elevation" }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const favoriteState: Flight[] = useAppSelect(
@@ -29,9 +31,6 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
   );
 
   const [isFavorite, setIsFavorite] = useState<Boolean>(initialIsFavorite);
-  if (flight.id === "FL002") {
-    console.log("isFavorite", isFavorite);
-  }
 
   const currentFlightDuration =
     new Date(flight.arrivalTime).getTime() -
@@ -75,26 +74,29 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
 
   return (
     <Card
-      elevation={6}
+      variant={variant}
       sx={{
         position: "relative",
-        backgroundColor: "#F4ECD0",
-        cursor: "pointer",
-        transition: "transform 0.2s ease-in-out",
-        "&:hover": {
-          transform: "scale3d(1.01, 1, 1)",
-        },
       }}
       onClick={(e) => openFlight(e)}
     >
-      <div className="absolute top-5 right-5 flex w-full justify-end gap-2">
+      <Stack
+        sx={{
+          position: "absolute",
+          top: "1rem",
+          right: "1rem",
+          justifyContent: "end",
+          flexDirection: "row",
+          gap: 0,
+        }}
+      >
         <IconButton onClick={(e) => handleAddToFavorites(e)}>
           {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
         <IconButton onClick={(e) => handleShare(e)}>
           <SendIcon />
         </IconButton>
-      </div>
+      </Stack>
 
       <CardContent>
         <Typography variant="h3" sx={{ marginBottom: "1rem" }}>
@@ -104,35 +106,73 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
           {flight.id}
         </Typography>
 
-        <div className="mb-2 flex justify-around">
-          <div className="flex flex-col">
+        <Stack
+          sx={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <Stack
+            sx={{ flexDirection: "column", alignItems: "start", gap: "1rem" }}
+          >
             <Typography variant="h3">{flight.from}</Typography>
             <Typography variant="h4" sx={{ color: "text.secondary" }}>
               {new Date(flight.departureTime).toLocaleString()}
             </Typography>
-          </div>
-          <div className="flex flex-col">
+          </Stack>
+          <Stack
+            sx={{ flexDirection: "column", alignItems: "start", gap: "1rem" }}
+          >
             <Typography variant="h3">{flight.to}</Typography>
             <Typography variant="h4" sx={{ color: "text.secondary" }}>
               {new Date(flight.arrivalTime).toLocaleString()}
             </Typography>
-          </div>
-        </div>
+          </Stack>
+        </Stack>
 
-        <div className="flex items-end justify-center gap-2.5">
+        <Stack
+          sx={{
+            flexDirection: "row",
+            alignItems: "end",
+            justifyContent: "center",
+
+            [theme.breakpoints.down("sm")]: {
+              alignItems: "start",
+            },
+          }}
+        >
           <Typography variant="h4">Flight duration:</Typography>
           <Typography variant="h2">
             {hours}:{minutes}
           </Typography>
-        </div>
+        </Stack>
 
-        <div className="mb-2 flex items-end justify-between">
-          <div className="flex gap-5">
+        <Stack
+          sx={{
+            flexDirection: "row",
+            alignItems: "end",
+            justifyContent: "space-between",
+
+            [theme.breakpoints.down("sm")]: {
+              alignItems: "start",
+            },
+          }}
+        >
+          <Stack
+            sx={{
+              flexDirection: "row",
+              margin: 0,
+              [theme.breakpoints.down("sm")]: {
+                alignItems: "start",
+              },
+            }}
+            className="flex gap-5"
+          >
             <Typography variant="h4">Terminal: {flight.terminal}</Typography>
             <Typography variant="h4">Gate:{flight.gate}</Typography>
-          </div>
+          </Stack>
           <Typography variant="body1">Price: {flight.price}$</Typography>
-        </div>
+        </Stack>
       </CardContent>
     </Card>
   );

@@ -9,16 +9,10 @@ import FlightsByDateList from "./FlightsByDateList/FlightsByDateList";
 
 interface ListTabProps {
   flights: FlightDate[];
-  totalFlightsCount: number;
   filters: Filters;
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
 }
-const ListTab: FC<ListTabProps> = ({
-  flights,
-  totalFlightsCount,
-  filters,
-  setFilters,
-}) => {
+const ListTab: FC<ListTabProps> = ({ flights, filters, setFilters }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
 
@@ -49,19 +43,13 @@ const ListTab: FC<ListTabProps> = ({
   };
 
   return (
-    <div className="flex w-full flex-col gap-5">
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+    <Stack sx={{ margin: 0, width: "100%" }}>
+      <Stack sx={{ width: "100%", gap: "1rem", flexDirection: "row" }}>
         <DeletableChips
           setFilters={setFilters}
           appliedFilters={filters}
         ></DeletableChips>
+
         <TablePagination
           component="div"
           count={flights.length}
@@ -89,7 +77,7 @@ const ListTab: FC<ListTabProps> = ({
           </Typography>
         </Paper>
       )}
-    </div>
+    </Stack>
   );
 };
 

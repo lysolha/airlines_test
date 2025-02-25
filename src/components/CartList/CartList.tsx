@@ -18,7 +18,6 @@ const CartList: FC<CartListProps> = ({ flights, addedTickets }) => {
     >
       {flights.length > 0 &&
         addedTickets.map((ticket) => {
-          console.log(ticket);
           return (
             <CartFlightCard
               key={`${ticket.flight}-${ticket.place}`}

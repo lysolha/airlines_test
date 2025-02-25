@@ -5,7 +5,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
+import { theme } from "../../theme";
 import type { Filters } from "..//../Entities/Filters";
 
 interface SearchFormProps {
@@ -40,7 +41,7 @@ const SearchForm: FC<SearchFormProps> = ({ setFilters }) => {
   return (
     <FormControl sx={{ width: "100%" }}>
       <Grid container spacing={1}>
-        <Grid size={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <TextField
             value={fromValue}
             onChange={(e) => setFromValue(e.target.value)}
@@ -48,7 +49,7 @@ const SearchForm: FC<SearchFormProps> = ({ setFilters }) => {
             placeholder="From"
           ></TextField>
         </Grid>
-        <Grid size={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <TextField
             value={toValue}
             onChange={(e) => setToValue(e.target.value)}
@@ -56,19 +57,27 @@ const SearchForm: FC<SearchFormProps> = ({ setFilters }) => {
             placeholder="To"
           ></TextField>
         </Grid>
-        <Grid size={2}>
+        <Grid size={{ xs: 12, md: 2 }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
+              sx={{
+                width: "100%",
+              }}
               value={dateFlight}
               onChange={(newValue) => setDateFlight(newValue)}
             />
           </LocalizationProvider>
         </Grid>
-        <Grid size={2}>
+        <Grid size={{ xs: 12, md: 2 }}>
           <Button
             disabled={!fromValue && !toValue && !dateFlight}
             variant="full"
             onClick={searchFlights}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                padding: "0.5rem",
+              },
+            }}
           >
             Search
           </Button>

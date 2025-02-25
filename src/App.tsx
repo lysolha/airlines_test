@@ -1,11 +1,5 @@
 import TransitEnterexitIcon from "@mui/icons-material/TransitEnterexit";
-import {
-  Link,
-  Navigate,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import "./index.css";
 import FlightsPage from "./pages/FlightsPage";
 
@@ -18,6 +12,7 @@ import type { Ticket } from "./Entities/Ticket";
 import Cart from "./pages/Cart";
 import FavoritesPage from "./pages/FavorietsPage";
 import FlightDetailsPage from "./pages/FlightDetailsPage";
+import { theme } from "./theme";
 
 const App = () => {
   const cartState: Ticket[] = useAppSelect((state) => state.card.tickets);
@@ -25,30 +20,86 @@ const App = () => {
     (state) => state.favorite.favorites,
   );
 
+  const location = useLocation();
+
   return (
-    <Router>
+    <>
       <Stack
         sx={{
-          alignItems: "center",
-          margin: "2rem",
+          gap: 0,
           position: "relative",
+          marginBottom: "2rem",
+
+          [theme.breakpoints.down("md")]: {
+            gap: "1rem",
+          },
+
+          [theme.breakpoints.down("sm")]: {
+            marginBottom: "1rem",
+          },
         }}
       >
-        <Link to="/">
+        <Stack sx={{ flexDirection: "row" }}>
+          {location.pathname !== "/" && (
+            <Link to="/">
+              <Paper
+                sx={{
+                  position: "absolute",
+                  left: 0,
+                  top: "50%",
+                  transform: "translate(-0%, -50%)",
+                  width: "fit-content",
+
+                  [theme.breakpoints.down("sm")]: {
+                    position: "initial",
+                    top: 0,
+                    left: 0,
+                    transform: "none",
+                  },
+                }}
+              >
+                <TransitEnterexitIcon
+                  fontSize="large"
+                  sx={{ rotate: "45deg" }}
+                ></TransitEnterexitIcon>
+              </Paper>
+            </Link>
+          )}
+
           <Paper
             sx={{
               position: "absolute",
-              left: 0,
+              display: "flex",
+              flexDirection: "row",
+              right: 0,
               top: "50%",
               transform: "translate(-0%, -50%)",
+              gap: "1rem",
+              width: "fit-content",
+              [theme.breakpoints.down("md")]: {
+                padding: "1rem",
+              },
+
+              [theme.breakpoints.down("sm")]: {
+                position: "initial",
+                top: 0,
+                left: 0,
+                transform: "none",
+              },
             }}
           >
-            <TransitEnterexitIcon
-              fontSize="large"
-              sx={{ rotate: "45deg" }}
-            ></TransitEnterexitIcon>
+            <Link to="/liked">
+              <Badge badgeContent={favoriteState.length} color="primary">
+                <FavoriteIcon fontSize="large" />
+              </Badge>
+            </Link>
+            <Link to="/cart">
+              <Badge badgeContent={cartState.length} color="primary">
+                <ShoppingBagIcon fontSize="large" />
+              </Badge>
+            </Link>
           </Paper>
-        </Link>
+        </Stack>
 
         <Link to="/">
           <Paper
@@ -58,41 +109,16 @@ const App = () => {
             <Typography variant="h1">Happy Airline Tickets</Typography>
           </Paper>
         </Link>
-
-        <Paper
-          sx={{
-            position: "absolute",
-            display: "flex",
-            flexDirection: "row",
-            right: 0,
-            top: "50%",
-            transform: "translate(-0%, -50%)",
-            gap: "1rem",
-          }}
-        >
-          <Link to="/liked">
-            <Badge badgeContent={favoriteState.length} color="primary">
-              <FavoriteIcon fontSize="large" />
-            </Badge>
-          </Link>
-          <Link to="/cart">
-            <Badge badgeContent={cartState.length} color="primary">
-              <ShoppingBagIcon fontSize="large" />
-            </Badge>
-          </Link>
-        </Paper>
       </Stack>
 
-      <div className="mx-10 max-w-7xl xl:m-auto">
-        <Routes>
-          <Route index element={<FlightsPage />} />
-          <Route path="flights/:id" element={<FlightDetailsPage />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="liked" element={<FavoritesPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </div>
-    </Router>
+      <Routes>
+        <Route index element={<FlightsPage />} />
+        <Route path="flights/:id" element={<FlightDetailsPage />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="liked" element={<FavoritesPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 };
 

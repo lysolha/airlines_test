@@ -1,4 +1,6 @@
+import { Stack } from "@mui/material";
 import { FC } from "react";
+import { theme } from "../../theme";
 import { splitIntoCustomSizes } from "../../utils/splitArrayIntoCabins";
 import SeatCabin from "./SeatCabin";
 
@@ -22,7 +24,20 @@ const SeatRow: FC<SeatRowProps> = ({
   );
 
   return (
-    <div className="flex flex-col justify-center gap-3.5">
+    <Stack
+      sx={{
+        flexDirection: "column",
+        justifyContent: "center",
+        gap: "1.3rem",
+
+        [theme.breakpoints.down("lg")]: {
+          flexDirection: "row",
+        },
+        [theme.breakpoints.down("s")]: {
+          flexDirection: "column",
+        },
+      }}
+    >
       <span>{rowNumber}</span>
       {cabinsArray.map((cabin, index) => {
         const cabinID = `${flightId}-row-${index}`;
@@ -34,7 +49,7 @@ const SeatRow: FC<SeatRowProps> = ({
           ></SeatCabin>
         );
       })}
-    </div>
+    </Stack>
   );
 };
 

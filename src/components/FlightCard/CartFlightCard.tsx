@@ -1,6 +1,4 @@
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import { FC } from "react";
 import { Flight } from "../../Entities/Flight";
 
@@ -9,6 +7,7 @@ import { Paper, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { removeFromCart } from "../../app/reducers/CardSlice";
+import FlightCard from "./FlightCard";
 
 interface DetailsFlightCardProps {
   flight: Flight;
@@ -33,56 +32,8 @@ const CartFlightCard: FC<DetailsFlightCardProps> = ({ flight, tickets }) => {
   );
 
   return (
-    <Stack sx={{ display: "flex", flexDirection: "row" }}>
-      <Card
-        variant="ticket"
-        elevation={6}
-        sx={{
-          position: "relative",
-          width: "100%",
-        }}
-        onClick={(e) => openFlight(e)}
-      >
-        <CardContent>
-          <Stack></Stack>
-          <Typography variant="h3" sx={{ marginBottom: "1rem" }}>
-            {flight.airline}
-          </Typography>
-          <Typography variant="h3" sx={{ marginLeft: "2rem" }}>
-            {flight.id}
-          </Typography>
-
-          <div className="mb-2 flex justify-around">
-            <div className="flex flex-col">
-              <Typography variant="h3">{flight.from}</Typography>
-              <Typography variant="h4" sx={{ color: "text.secondary" }}>
-                {new Date(flight.departureTime).toLocaleString()}
-              </Typography>
-            </div>
-            <div className="flex flex-col">
-              <Typography variant="h3">{flight.to}</Typography>
-              <Typography variant="h4" sx={{ color: "text.secondary" }}>
-                {new Date(flight.arrivalTime).toLocaleString()}
-              </Typography>
-            </div>
-          </div>
-
-          <div className="flex items-end justify-center gap-2.5">
-            <Typography variant="h4">Flight duration:</Typography>
-            <Typography variant="h2">
-              {hours}:{minutes}
-            </Typography>
-          </div>
-
-          <div className="mb-2 flex items-end justify-between">
-            <div className="flex gap-5">
-              <Typography variant="h4">Terminal: {flight.terminal}</Typography>
-              <Typography variant="h4">Gate:{flight.gate}</Typography>
-            </div>
-            <Typography variant="body1">Price: {flight.price}$</Typography>
-          </div>
-        </CardContent>
-      </Card>
+    <Stack sx={{ flexDirection: "row", alignItems: "start", width: "100%" }}>
+      <FlightCard flight={flight}></FlightCard>
 
       <Paper
         variant="bortPass"
@@ -91,6 +42,8 @@ const CartFlightCard: FC<DetailsFlightCardProps> = ({ flight, tickets }) => {
           flexDirection: "column",
           padding: "1rem",
           gap: "0.5rem",
+          width: "30%",
+          height: "100%",
         }}
       >
         {tickets.map((ticket) => {

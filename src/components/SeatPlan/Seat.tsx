@@ -41,11 +41,17 @@ export const Seat = ({ status, id, flightId }: SeatProps) => {
             "&:hover": {
               rotate: "0deg",
             },
+
+            [theme.breakpoints.down("lg")]: {
+              rotate: "0deg",
+            },
+
             ...(variant === "sold" && {
               fill: "gray",
               cursor: "auto",
               "&:hover": {
                 rotate: "90deg",
+                transform: "none",
               },
             }),
             ...(variant === "checked" && {

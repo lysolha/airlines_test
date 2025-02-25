@@ -12,6 +12,16 @@ export const theme = createTheme({
       light: "#F4ECD0",
     },
   },
+  breakpoints: {
+    values: {
+      s: 450,
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   typography: {
     fontFamily: "'JosefinSans', sans-serif",
     h1: {
@@ -19,35 +29,36 @@ export const theme = createTheme({
       fontFamily: "Piedra",
       fontSize: "4rem",
       width: "fit-content",
-      ["@media (max-width:600px)"]: {
-        fontSize: "2rem",
-      },
-      ["@media (min-width:600px) and (max-width:900px)"]: {
+      textAlign: "center",
+      "@media (max-width:1200px)": {
         fontSize: "3rem",
+      },
+      "@media (max-width:900px)": {
+        fontSize: "2rem",
       },
     },
     h2: {
       color: "#4A2626",
       fontFamily: "Piedra",
       fontSize: "2rem",
-      ["@media (max-width:600px)"]: {
-        fontSize: "1rem",
+      "@media (max-width:900px)": {
+        fontSize: "1.5rem",
       },
     },
     h3: {
       color: "#4A2626",
       fontFamily: "Piedra",
       fontSize: "1.5rem",
-      ["@media (max-width:600px)"]: {
-        fontSize: "0.8rem",
+      "@media (max-width:900px)": {
+        fontSize: "1rem",
       },
     },
     h4: {
       color: "#4A2626",
       fontFamily: "JosefinSans",
       fontSize: "1.5rem",
-      ["@media (max-width:600px)"]: {
-        fontSize: "0.8rem",
+      "@media (max-width:900px)": {
+        fontSize: "1rem",
       },
     },
     body1: {
@@ -56,6 +67,41 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: "transparent",
+          margin: "0 auto",
+          padding: "3rem 0",
+          maxWidth: "1200px",
+          "@media (max-width:900px)": {
+            maxWidth: "900px",
+            margin: "0 1rem",
+            padding: "1.5rem 0",
+          },
+          "@media (min-width:901px)": {
+            maxWidth: "1200px",
+            margin: "0 3rem",
+          },
+        },
+      },
+    },
+    MuiStack: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          display: "flex",
+          margin: "0 auto",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "1.5rem",
+
+          [theme.breakpoints.down("sm")]: {
+            margin: "0",
+            flexDirection: "column",
+          },
+        }),
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({
@@ -84,6 +130,7 @@ export const theme = createTheme({
             {
               props: { variant: "full" },
               style: {
+                padding: 0,
                 width: "100%",
                 height: "100%",
               },
@@ -93,6 +140,9 @@ export const theme = createTheme({
       },
     },
     MuiPaper: {
+      defaultProps: {
+        elevation: 6,
+      },
       styleOverrides: {
         root: ({ theme }) => ({
           textTransform: "none",
@@ -100,12 +150,14 @@ export const theme = createTheme({
           padding: "1rem 2rem",
           border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
+          width: "100%",
+          transition: "transform 0.2s ease-in-out",
 
-          ["@media (max-width:600px)"]: {
-            padding: "1rem",
-            borderRadius: "1rem",
-            border: `0.2rem dashed ${theme.palette.primary.main}`,
-          },
+          // ["@media (max-width:600px)"]: {
+          //   padding: "1rem",
+          //   borderRadius: "1rem",
+          //   border: `0.2rem dashed ${theme.palette.primary.main}`,
+          // },
 
           variants: [
             {
@@ -130,11 +182,11 @@ export const theme = createTheme({
           border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
 
-          ["@media (max-width:600px)"]: {
-            padding: "1rem",
-            borderRadius: "1rem",
-            border: `0.2rem dashed ${theme.palette.primary.main}`,
-          },
+          // ["@media (max-width:600px)"]: {
+          //   padding: "1rem",
+          //   borderRadius: "1rem",
+          //   border: `0.2rem dashed ${theme.palette.primary.main}`,
+          // },
         }),
       },
     },
@@ -148,17 +200,27 @@ export const theme = createTheme({
           border: `0.2rem dashed ${theme.palette.primary.main}`,
           borderRadius: "1rem",
 
-          ["@media (max-width:600px)"]: {
-            padding: "1rem",
-            borderRadius: "1rem",
-            border: `0.2rem dashed ${theme.palette.primary.main}`,
-          },
+          // ["@media (max-width:600px)"]: {
+          //   padding: "1rem",
+          //   borderRadius: "1rem",
+          //   border: `0.2rem dashed ${theme.palette.primary.main}`,
+          // },
         }),
       },
     },
     MuiCard: {
+      defaultProps: {
+        elevation: 6,
+      },
       styleOverrides: {
         root: ({ theme }) => ({
+          backgroundColor: theme.palette.secondary.light,
+          transition: "transform 0.2s ease-in-out",
+          cursor: "pointer",
+
+          "&:hover": {
+            transform: "scale3d(1.01, 1, 1)",
+          },
           "& .MuiCardContent-root": {
             ":last-child": {
               padding: 0,
@@ -171,6 +233,12 @@ export const theme = createTheme({
                 padding: "3rem 0rem",
                 backgroundColor: theme.palette.primary.main,
                 border: `0.2rem dashed ${theme.palette.secondary.light}`,
+                transform: "none",
+                cursor: "auto",
+
+                "&:hover": {
+                  transform: "none",
+                },
 
                 "& .MuiCardContent-root": {
                   padding: "1rem 2rem",
@@ -212,11 +280,11 @@ export const theme = createTheme({
             border: `0.2rem dashed ${theme.palette.primary.main}`,
           },
 
-          ["@media (max-width:600px)"]: {
-            padding: "1rem",
-            borderRadius: "1rem",
-            border: `0.2rem dashed ${theme.palette.primary.main}`,
-          },
+          // ["@media (max-width:600px)"]: {
+          //   padding: "1rem",
+          //   borderRadius: "1rem",
+          //   border: `0.2rem dashed ${theme.palette.primary.main}`,
+          // },
         }),
       },
     },
@@ -243,6 +311,13 @@ export const theme = createTheme({
             color: theme.palette.primary.light,
             fontFamily: "Piedra",
           },
+        }),
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          flexWrap: "wrap",
         }),
       },
     },

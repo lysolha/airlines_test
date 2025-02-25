@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { Stack } from "@mui/material";
+import { type FC, useState } from "react";
 import { useFetchFlights } from "../API/useFetchFlights";
 import ListTab from "../components/ListTab";
 import Loading from "../components/Loading/AnimatedSVG";
@@ -19,7 +20,7 @@ const FlightsPage: FC = () => {
   const sortedFlights = useSortedAndFilteredFlights(flights, filters);
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <Stack>
       <SearchForm setFilters={setFilters} />
 
       {loading ? (
@@ -27,12 +28,11 @@ const FlightsPage: FC = () => {
       ) : (
         <ListTab
           flights={sortedFlights}
-          totalFlightsCount={sortedFlights.length}
           filters={filters}
           setFilters={setFilters}
         />
       )}
-    </div>
+    </Stack>
   );
 };
 

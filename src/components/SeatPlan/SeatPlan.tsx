@@ -30,7 +30,6 @@ const SeatPlan: FC<SeatPlanParams> = ({ flightId, tickets }) => {
 
     if (parsedData.length === 0) {
       parsedData = getRandomSoldSeats(tickets.total, tickets.remaining);
-      console.log("parsedData", parsedData);
       localStorage.setItem(`random-${flightId}`, JSON.stringify(parsedData));
     }
 
@@ -60,15 +59,11 @@ const SeatPlan: FC<SeatPlanParams> = ({ flightId, tickets }) => {
         return seat;
       });
 
-      console.log("updatedSeats", updatedSeats);
-
       return splitArrayToRows(updatedSeats, seatPlan.seatsPerRow);
     }
 
     return splitArrayToRows(generatedSeats, seatPlan.seatsPerRow);
   }, [generatedSeats]);
-
-  console.log("selectedSeats", selectedSeats);
 
   return (
     <Paper
@@ -87,6 +82,10 @@ const SeatPlan: FC<SeatPlanParams> = ({ flightId, tickets }) => {
           flexDirection: "row",
           gap: "1rem",
           width: "fit-content",
+
+          [theme.breakpoints.down("lg")]: {
+            flexDirection: "column",
+          },
         }}
       >
         {rowsPlan.length > 0 &&

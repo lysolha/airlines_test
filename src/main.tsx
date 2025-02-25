@@ -6,7 +6,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import "./index.css";
 import { theme } from "./theme";
 
+import { CssBaseline } from "@mui/material";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { persistor, store } from "./app/store";
@@ -21,7 +23,11 @@ if (container) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={theme}>
-            <App />
+            <CssBaseline>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </CssBaseline>
           </ThemeProvider>
         </PersistGate>
       </Provider>

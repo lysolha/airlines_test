@@ -13,7 +13,7 @@ const FlightsByDateList: FC<FlightsByDateListProps> = ({
   date,
 }) => {
   return (
-    <Paper elevation={6} sx={{ borderWidth: "0.2rem", width: "100%" }}>
+    <Paper sx={{ borderWidth: "0.2rem", width: "100%" }}>
       <Typography variant="h2" sx={{ marginBottom: "1rem" }}>
         Date: {date}
       </Typography>

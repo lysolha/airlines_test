@@ -1,4 +1,6 @@
+import { Stack } from "@mui/material";
 import { FC } from "react";
+import { theme } from "../../theme";
 import Seat from "./Seat";
 interface SeatCabinProps {
   flightId: string;
@@ -6,7 +8,16 @@ interface SeatCabinProps {
 }
 const SeatCabin: FC<SeatCabinProps> = ({ flightId, cabinArr }) => {
   return (
-    <div className="flex flex-col">
+    <Stack
+      sx={{
+        gap: "0.5rem",
+
+        [theme.breakpoints.down("lg")]: {
+          flexDirection: "row",
+          gap: "0.2rem",
+        },
+      }}
+    >
       {cabinArr.map((seat) => {
         const seatID = Object.keys(seat)[0];
         const status = seat[seatID];
@@ -19,7 +30,7 @@ const SeatCabin: FC<SeatCabinProps> = ({ flightId, cabinArr }) => {
           />
         );
       })}
-    </div>
+    </Stack>
   );
 };
 

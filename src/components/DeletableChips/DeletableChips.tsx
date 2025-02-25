@@ -17,7 +17,7 @@ const DeletableChips: FC<DeletableChipsProps> = ({
   };
 
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="row" spacing={1} sx={{ width: "fit-content", margin: 0 }}>
       {Object.entries(appliedFilters)
         .filter(([key, value]) => key !== "isSearch" && value !== "")
         .map(([key, value]) => (
