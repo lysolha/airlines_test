@@ -1,54 +1,39 @@
 import { FC } from "react";
+import { splitIntoCustomSizes } from "../../utils/splitArrayIntoCabins";
 import SeatCabin from "./SeatCabin";
 
 interface SeatRowProps {
-  rowId: string;
-  typeArr: string[];
-  lastRowSeatsCount: number;
-  seatsForRow: string[];
+  rowNumber: number;
+  rowArr: Record<string, string>[];
+  planeType: string;
+  flightId: string;
 }
 
 const SeatRow: FC<SeatRowProps> = ({
-  rowId,
-  typeArr,
-  lastRowSeatsCount,
-  seatsForRow,
+  rowNumber,
+  rowArr,
+  planeType,
+  flightId,
 }) => {
+  const cabinsType = planeType.split("-").map((element) => parseInt(element));
+  const cabinsArray: Record<string, string>[][] = splitIntoCustomSizes(
+    rowArr,
+    cabinsType,
+  );
+
   return (
     <div className="flex flex-col justify-center gap-3.5">
-      {lastRowSeatsCount === 0 ? (
-        typeArr.map((item, index) => {
-          const cabinKey = `${rowId}-cabin-${index}`;
-          const seats = seatsForRow.slice(index, parseInt(item));
-          return (
-            <SeatCabin
-              key={cabinKey}
-              cabinId={cabinKey}
-              seatCount={parseInt(typeArr[index])}
-              seatsForCabin={seats}
-            />
-          );
-        })
-      ) : (
-        // Array.from({ length: typeArr.length }, (_, index) => {
-        //   const cabinKey = `${rowId}-cabin-${index}`;
-        //   const index =
-        //   const seats =
-        //   return (
-        //     <SeatCabin
-        //       key={cabinKey}
-        //       cabinId={cabinKey}
-        //       seatCount={parseInt(typeArr[index])}
-        //       seatsForCabin={seats}
-        //     />
-        //   );
-        // })
-        <SeatCabin
-          key={`${rowId}-last`}
-          cabinId={`${rowId}-last`}
-          seatCount={lastRowSeatsCount}
-        />
-      )}
+      <span>{rowNumber}</span>
+      {cabinsArray.map((cabin, index) => {
+        const cabinID = `${flightId}-row-${index}`;
+        return (
+          <SeatCabin
+            key={cabinID}
+            cabinArr={cabin}
+            flightId={flightId}
+          ></SeatCabin>
+        );
+      })}
     </div>
   );
 };

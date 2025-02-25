@@ -1,21 +1,23 @@
 import { FC } from "react";
 import Seat from "./Seat";
 interface SeatCabinProps {
-  cabinId: string;
-  seatCount: number;
-  seatsForCabin: string[];
+  flightId: string;
+  cabinArr: Record<string, string>[];
 }
-const SeatCabin: FC<SeatCabinProps> = ({
-  cabinId,
-  seatCount,
-  seatsForCabin,
-}) => {
+const SeatCabin: FC<SeatCabinProps> = ({ flightId, cabinArr }) => {
   return (
     <div className="flex flex-col">
-      {Array.from({ length: seatCount }, (_, index) => {
-        const seatId = `${cabinId}-seat-${index}`;
-        const seatStatus = seatsForCabin[index] === "sold";
-        return <Seat key={seatId} seatStatus={seatStatus}></Seat>;
+      {cabinArr.map((seat) => {
+        const seatID = Object.keys(seat)[0];
+        const status = seat[seatID];
+        return (
+          <Seat
+            key={`${flightId}-${seatID}`}
+            status={status}
+            id={seatID}
+            flightId={flightId}
+          />
+        );
       })}
     </div>
   );

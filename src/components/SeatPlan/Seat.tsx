@@ -1,39 +1,68 @@
 import EventSeatIcon from "@mui/icons-material/EventSeat";
-import { FC, useState } from "react";
-interface SeatProps {
-  seatStatus: boolean;
-}
-const Seat: FC<SeatProps> = ({ seatStatus }) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-  const variant = seatStatus ? "sold" : isChecked ? "checked" : "auto";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import { theme } from "../../theme";
+import { useSeats } from "./SeatsContext";
+
+type SeatProps = {
+  status: string;
+  id: string;
+  flightId: string;
+};
+
+export const Seat = ({ status, id, flightId }: SeatProps) => {
+  const { toggleSeat, isSeatSelected } = useSeats();
+  const selected = isSeatSelected(id);
+  const variant =
+    status === "sold"
+      ? "sold"
+      : status === "cart"
+        ? "cart"
+        : selected
+          ? "checked"
+          : "auto";
+
+  const handleToggle = () => {
+    if (variant !== "cart") {
+      toggleSeat({ id, flightId });
+    }
+  };
+
   return (
-    <EventSeatIcon
-      onClick={() => setIsChecked((prev) => !prev)}
-      fontSize="small"
-      sx={{
-        fill: "black",
-        transform: "rotate(90deg)",
-        cursor: "pointer",
-        transition: "transform 0.2s ease-in-out",
-        "&:hover": {
-          transform: "rotate(0deg)",
-        },
-        ...(variant === "sold" && {
-          fill: "gray",
-          cursor: "auto",
-          "&:hover": {
-            transform: "rotate(90deg)",
-          },
-        }),
-        ...(variant === "checked" && {
-          fill: "green",
-          transform: "rotate(0deg)",
-          "&:hover": {
-            transform: "rotate(0deg)",
-          },
-        }),
-      }}
-    />
+    <Tooltip title={variant !== "cart" ? id : "Seat in the cart"}>
+      <IconButton onClick={() => handleToggle()} sx={{ padding: 0 }}>
+        <EventSeatIcon
+          className={`seat ${selected ? "selected" : ""}`}
+          sx={{
+            fill: "black",
+            rotate: "90deg",
+            cursor: "pointer",
+            transition: "rotate 0.2s ease-in-out",
+            "&:hover": {
+              rotate: "0deg",
+            },
+            ...(variant === "sold" && {
+              fill: "gray",
+              cursor: "auto",
+              "&:hover": {
+                rotate: "90deg",
+              },
+            }),
+            ...(variant === "checked" && {
+              fill: "green",
+              transform: "scale3d(1.3, 1.3, 1.3)",
+              rotate: "0deg",
+            }),
+            ...(variant === "cart" && {
+              fill: theme.palette.primary.light,
+              stroke: theme.palette.primary.main,
+              transform: "scale3d(1.3, 1.3, 1.3)",
+              rotate: "0deg",
+            }),
+          }}
+        />
+      </IconButton>
+    </Tooltip>
   );
 };
 

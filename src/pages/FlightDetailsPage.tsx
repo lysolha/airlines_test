@@ -1,14 +1,14 @@
-import { Paper, Stack } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { useFetchSingleFlight } from "../API/useFetchFlights";
 import DetailsFlightCard from "../components/FlightCard/DetailsFlightCard";
 import Loading from "../components/Loading/AnimatedSVG";
 import SeatPlan from "../components/SeatPlan/SeatPlan";
+import { SeatsProvider } from "../components/SeatPlan/SeatsContext";
 
 const FlightDetailsPage: FC = () => {
   const { id } = useParams();
-
   const { flight, error, loading } = useFetchSingleFlight(id);
 
   return (
@@ -16,12 +16,21 @@ const FlightDetailsPage: FC = () => {
       {loading ? (
         <Loading />
       ) : (
-        <Paper sx={{ padding: "2rem" }}>
-          <Stack gap="2rem">
-            <DetailsFlightCard flight={flight}></DetailsFlightCard>
-            <SeatPlan flightId={flight.id} tickets={flight.tickets} />
-          </Stack>
-        </Paper>
+        <SeatsProvider>
+          <Paper sx={{ padding: "2rem" }}>
+            <Typography
+              variant="h2"
+              sx={{ marginBottom: "1rem", textAlign: "center" }}
+            >
+              Flight details
+            </Typography>
+            <Stack gap="2rem">
+              <DetailsFlightCard flight={flight}></DetailsFlightCard>
+
+              <SeatPlan flightId={flight.id} tickets={flight.tickets} />
+            </Stack>
+          </Paper>
+        </SeatsProvider>
       )}
     </div>
   );

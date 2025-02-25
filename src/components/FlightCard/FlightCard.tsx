@@ -1,18 +1,37 @@
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import SendIcon from "@mui/icons-material/Send";
+import { IconButton } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Flight } from "../../Entities/Flight";
-
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import SendIcon from "@mui/icons-material/Send";
+import { useAppDispatch, useAppSelect } from "../../app/hooks";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../app/reducers/FavoritesSlice";
+import type { Flight } from "../../Entities/Flight";
 
 interface FlightCardProps {
   flight: Flight;
 }
 const FlightCard: FC<FlightCardProps> = ({ flight }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const favoriteState: Flight[] = useAppSelect(
+    (state) => state.favorite.favorites,
+  );
+
+  const initialIsFavorite: Boolean = !!favoriteState.find(
+    (favorite) => favorite.id === flight.id,
+  );
+
+  const [isFavorite, setIsFavorite] = useState<Boolean>(initialIsFavorite);
+  if (flight.id === "FL002") {
+    console.log("isFavorite", isFavorite);
+  }
 
   const currentFlightDuration =
     new Date(flight.arrivalTime).getTime() -
@@ -23,9 +42,35 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
     (currentFlightDuration % (1000 * 60 * 60)) / (1000 * 60),
   );
 
-  const openFlight = (e) => {
+  const openFlight = (e: MouseEvent) => {
     e.preventDefault();
     navigate(`/flights/${flight.id}`);
+  };
+
+  const handleShare = async (e: MouseEvent) => {
+    e.stopPropagation();
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          url: `${window.location.origin}/flights/${flight.id}`,
+        });
+      } catch (error) {
+        throw new Error(`${error}`);
+      }
+    } else {
+      console.log("Web Share API does not work in this browser");
+    }
+  };
+
+  const handleAddToFavorites = (e: MouseEvent) => {
+    e.stopPropagation();
+    if (isFavorite) {
+      dispatch(removeFromFavorites(flight));
+      setIsFavorite(!isFavorite);
+    } else {
+      dispatch(addToFavorites(flight));
+      setIsFavorite(!isFavorite);
+    }
   };
 
   return (
@@ -43,8 +88,12 @@ const FlightCard: FC<FlightCardProps> = ({ flight }) => {
       onClick={(e) => openFlight(e)}
     >
       <div className="absolute top-5 right-5 flex w-full justify-end gap-2">
-        <FavoriteBorderIcon />
-        <SendIcon />
+        <IconButton onClick={(e) => handleAddToFavorites(e)}>
+          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
+        <IconButton onClick={(e) => handleShare(e)}>
+          <SendIcon />
+        </IconButton>
       </div>
 
       <CardContent>

@@ -14,7 +14,6 @@ const FlightSelect = () => {
   const handleChange = (event: SelectChangeEvent) => {
     const { value } = event.target;
     setFilter(value);
-    console.log(value);
   };
 
   return (
