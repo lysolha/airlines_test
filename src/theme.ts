@@ -79,8 +79,7 @@ export const theme = createTheme({
             margin: "0 1rem",
             padding: "1.5rem 0",
           },
-          "@media (min-width:901px)": {
-            maxWidth: "1200px",
+          "@media (max-width:1200px)": {
             margin: "0 3rem",
           },
         },

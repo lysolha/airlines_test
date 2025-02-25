@@ -7,7 +7,7 @@ import { useAppSelect } from "./app/hooks";
 import type { Flight } from "./Entities/Flight";
 import type { Ticket } from "./Entities/Ticket";
 import "./index.css";
-import Cart from "./pages/Cart";
+import Cart from "./pages/CartPage";
 import FavoritesPage from "./pages/FavorietsPage";
 import FlightDetailsPage from "./pages/FlightDetailsPage";
 import FlightsPage from "./pages/FlightsPage";
