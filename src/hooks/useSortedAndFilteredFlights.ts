@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Flight } from "../Entities/Flight";
 import type { FlightDate } from "../Entities/FlightDate";
-import { formatDate } from "../utils/dateFormatter";
+import { getFormattedDate } from "../utils/getFormattedDate";
 
 const useSearchFlights = (
   flights: Flight[],
@@ -11,7 +11,7 @@ const useSearchFlights = (
   searchDate: string,
 ): Flight[] => {
   const searchFlights = (flights: Flight[]): Flight[] | [] => {
-    const formattedDate = searchDate ? formatDate(searchDate) : "";
+    const formattedDate = searchDate ? getFormattedDate(searchDate) : "";
 
     const searchedFlights = flights.filter((flight) => {
       return (

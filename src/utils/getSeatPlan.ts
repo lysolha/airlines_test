@@ -1,4 +1,4 @@
-export const seatPlanBuilder = (seatsCount: number) => {
+export const getSeatPlane = (seatsCount: number) => {
   if (seatsCount % 7 === 0) {
     return {
       type: "2-3-2",

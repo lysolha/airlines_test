@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { FC } from "react";
+import type { FC } from "react";
 import { theme } from "../../theme";
 import { splitIntoCustomSizes } from "../../utils/splitArrayIntoCabins";
 import SeatCabin from "./SeatCabin";

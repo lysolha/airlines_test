@@ -1,17 +1,16 @@
-import TransitEnterexitIcon from "@mui/icons-material/TransitEnterexit";
-import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import "./index.css";
-import FlightsPage from "./pages/FlightsPage";
-
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import TransitEnterexitIcon from "@mui/icons-material/TransitEnterexit";
 import { Badge, Paper, Stack, Typography } from "@mui/material";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useAppSelect } from "./app/hooks";
 import type { Flight } from "./Entities/Flight";
 import type { Ticket } from "./Entities/Ticket";
+import "./index.css";
 import Cart from "./pages/Cart";
 import FavoritesPage from "./pages/FavorietsPage";
 import FlightDetailsPage from "./pages/FlightDetailsPage";
+import FlightsPage from "./pages/FlightsPage";
 import { theme } from "./theme";
 
 const App = () => {

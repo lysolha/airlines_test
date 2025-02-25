@@ -1,5 +1,5 @@
 import type { GeneratedDate, PlanePlan } from "../Entities/PlanePlan";
-import { seatPlanBuilder } from "./seatPlanBuilder";
+import { getSeatPlane } from "./getSeatPlan";
 export const getRandomSoldSeats = (
   totalSeats: number,
   soldCount: number,
@@ -11,7 +11,7 @@ export const getRandomSoldSeats = (
     ...Array(freeCount).fill("free"),
   ].sort(() => Math.random() - 0.5);
 
-  const seatPlan: PlanePlan = seatPlanBuilder(totalSeats);
+  const seatPlan: PlanePlan = getSeatPlane(totalSeats);
   const alphabet = "abcdefg";
 
   let row = 1;
