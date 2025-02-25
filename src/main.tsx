@@ -3,18 +3,13 @@ import { createRoot } from "react-dom/client";
 // import { store } from "./app/store"
 // import App from "./App"
 import { ThemeProvider } from "@mui/material/styles";
-import {
-  Navigate,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from "react-router-dom";
 import "./index.css";
-import FlightsPage from "./pages/FlightsPage";
 import { theme } from "./theme";
 
-import { Paper, Stack, Typography } from "@mui/material";
-import FlightDetailsPage from "./pages/FlightDetailsPage";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import App from "./App";
+import { persistor, store } from "./app/store";
 
 const container = document.getElementById("root");
 
@@ -23,29 +18,13 @@ if (container) {
 
   root.render(
     <React.StrictMode>
-      {/* <Provider store={store}> */}
-
-      <ThemeProvider theme={theme}>
-        <Stack sx={{ alignItems: "center", margin: "2rem" }}>
-          <Paper
-            elevation={6}
-            sx={{ width: "fit-content", borderWidth: "0.5rem" }}
-          >
-            <Typography variant="h1">Happy Airline Tickets</Typography>
-          </Paper>
-        </Stack>
-        <div className="mx-10 max-w-7xl xl:m-auto">
-          <Router>
-            <Routes>
-              <Route index element={<FlightsPage />} />
-              <Route path="flights/:id" element={<FlightDetailsPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Router>
-        </div>
-      </ThemeProvider>
-
-      {/* </Provider> */}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
     </React.StrictMode>,
   );
 } else {

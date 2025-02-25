@@ -68,6 +68,7 @@ export const theme = createTheme({
           backgroundColor: theme.palette.primary.main,
           border: `0.2rem dashed ${theme.palette.secondary.light}`,
           transition: "transform 0.2s ease-in-out",
+          padding: "1rem",
 
           "&:hover": {
             transform: "scale3d(1.03, 1, 1)",
@@ -105,6 +106,17 @@ export const theme = createTheme({
             borderRadius: "1rem",
             border: `0.2rem dashed ${theme.palette.primary.main}`,
           },
+
+          variants: [
+            {
+              props: { variant: "bortPass" },
+              style: {
+                padding: "0.5rem",
+                backgroundColor: theme.palette.primary.main,
+                border: `0.2rem dashed ${theme.palette.secondary.light}`,
+              },
+            },
+          ],
         }),
       },
     },
@@ -170,6 +182,14 @@ export const theme = createTheme({
                 },
               },
             },
+            {
+              props: { variant: "ticket" },
+              style: {
+                minWidth: "10rem",
+                backgroundColor: theme.palette.secondary.light,
+                borderColor: theme.palette.primary.main,
+              },
+            },
           ],
         }),
       },
@@ -196,6 +216,32 @@ export const theme = createTheme({
             padding: "1rem",
             borderRadius: "1rem",
             border: `0.2rem dashed ${theme.palette.primary.main}`,
+          },
+        }),
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fill: theme.palette.primary.main,
+          transition: "transform 0.2s ease-in-out",
+
+          "&:hover": {
+            transform: "scale3d(1.1, 1.1, 1.1)",
+          },
+        }),
+      },
+    },
+    MuiBadge: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          border: `1px solid ${theme.palette.primary.light}`,
+          color: theme.palette.primary.light,
+          fontFamily: "Piedra",
+
+          "&.MuiBadge-badge": {
+            color: theme.palette.primary.light,
+            fontFamily: "Piedra",
           },
         }),
       },

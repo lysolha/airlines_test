@@ -18,12 +18,13 @@
 html {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
   background-image: url("/images/BG_light.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
+  margin-bottom: 3rem;
 }
 
 body {
